@@ -22,6 +22,13 @@ interface Campaign {
 }
 export function CampaignListAndCreate() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [newCampaign, setNewCampaign] = useState({
+    campaignName: "",
+    companyName: "CompanyName (hard coded)",
+    companyDescription: "",
+    productDescription: "",
+    targetAudience: "",
+  });
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -63,15 +70,6 @@ export function CampaignListAndCreate() {
     }
   };
 
-  const [newCampaign, setNewCampaign] = useState({
-    campaignName: "",
-    companyName: "komåpaninamnet",
-    companyDescription: "",
-    productDescription: "",
-    targetAudience: "",
-    userId: "fbdaca97-182a-46e8-97d0-c93592b07705",
-  });
-
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleInputChange = (
@@ -92,6 +90,7 @@ export function CampaignListAndCreate() {
         `${envMode()}/api/campaigns/createcampaign`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
