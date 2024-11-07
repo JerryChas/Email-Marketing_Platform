@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 const allowedOrigins =
   process.env.NODE_ENV === 'production'
-    ? ['https://main.d1pnqzpk8ky9rb.amplifyapp.com/']
+    ? ['https://main.d1pnqzpk8ky9rb.amplifyapp.com']
     : ['http://localhost:5173'];
 
 //* Cors configuration
