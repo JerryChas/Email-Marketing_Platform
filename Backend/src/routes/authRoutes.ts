@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+
 import { Router } from "express";
 
 import passport from "passport";
@@ -7,7 +7,7 @@ const router = Router();
 
 const url =
   process.env.NODE_ENV === "production"
-    ? "https://email-marketing-platform-frontend.vercel.app"
+    ? "https://main.d1pnqzpk8ky9rb.amplifyapp.com/"
     : "http://localhost:5173";
 
 //* Google OAuth-routes
@@ -26,7 +26,7 @@ router.get(
       res.status(400).json({ message: "Could not log in with Google" });
       res.redirect(`${url}/login`);
     }
-  },
+  }
 );
 
 //* Logout route

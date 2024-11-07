@@ -5,31 +5,6 @@ import { isAuthenticated } from "../middleware/auth";
 const router = Router();
 
 //*Create new campaign --------------------------------->
-// router.post("/createcampaign", async (req, res) => {
-//   const {
-//     campaignName,
-//     companyName,
-//     companyDescription,
-//     productDescription,
-//     targetAudience,
-//     userId,
-//   } = req.body;
-//   try {
-//     const campaign = await prisma.campaign.create({
-//       data: {
-//         campaignName,
-//         companyName,
-//         companyDescription,
-//         productDescription,
-//         targetAudience,
-//         userId,
-//       },
-//     });
-//     res.json(campaign);
-//   } catch (error) {
-//     res.status(400).json({ error: "Unable to create campaign" });
-//   }
-// });
 router.post("/createcampaign", async (req, res) => {
   const {
     campaignName,

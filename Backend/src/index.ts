@@ -4,7 +4,6 @@ import passport from 'passport';
 import session from 'express-session';
 dotenv.config();
 import './strategies/google-strategy';
-import emailRoutes from './routes/emailRoutes';
 import campaignRoutes from './routes/campaignRoutes';
 import authRoutes from './routes/authRoutes';
 import generateTextRoute from './routes/generateText';
@@ -16,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 const allowedOrigins =
   process.env.NODE_ENV === 'production'
-    ? ['https://email-marketing-platform-frontend.vercel.app']
+    ? ['https://main.d1pnqzpk8ky9rb.amplifyapp.com/']
     : ['http://localhost:5173'];
 
 //* Cors configuration
@@ -30,7 +29,7 @@ const corsOptions: CorsOptions = {
 app.use(cors(corsOptions));
 
 // Detta behövs för att Express ska lita på proxy headers
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 //* Session setup
 const sessionSecret = process.env.SESSION_SECRET;

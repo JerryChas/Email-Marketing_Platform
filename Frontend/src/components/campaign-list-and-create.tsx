@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { PlusCircle, X } from "lucide-react";
-import envMode from "./helper/checkENVmode";
+import envMode from "../helper/checkENVmode";
 
 interface Campaign {
   id: string;
@@ -47,19 +47,19 @@ export function CampaignListAndCreate() {
   const handleDelete = async (id: any) => {
     try {
       const response = await fetch(`${envMode()}/api/campaigns/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (response.ok) {
         // Update the UI after deletion
-        setCampaigns(campaigns.filter(campaign => campaign.id !== id));
-        console.log(id)
+        setCampaigns(campaigns.filter((campaign) => campaign.id !== id));
+        console.log(id);
       } else {
-        console.log(id)
-        console.error('Failed to delete the campaign');
+        console.log(id);
+        console.error("Failed to delete the campaign");
       }
     } catch (error) {
-      console.error('Error deleting campaign:', error);
+      console.error("Error deleting campaign:", error);
     }
   };
 
@@ -130,8 +130,6 @@ export function CampaignListAndCreate() {
             Add New Campaign
           </Button>
         </div>
-
-
 
         {isFormVisible && (
           <Card className="bg-white shadow-lg mb-8">
@@ -241,7 +239,8 @@ export function CampaignListAndCreate() {
                 </p>
                 <button
                   className="mt-4 bg-red-400 hover:bg-red-700 text-white py-2 px-3 rounded transition duration-200"
-                  onClick={() => handleDelete(campaign.id)}>
+                  onClick={() => handleDelete(campaign.id)}
+                >
                   Delete
                 </button>
               </CardContent>

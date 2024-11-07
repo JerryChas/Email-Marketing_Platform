@@ -1,4 +1,4 @@
-import envMode from "@/components/helper/checkENVmode";
+import envMode from "@/helper/checkENVmode";
 
 function Footer() {
   const checkUser = async () => {

@@ -1,4 +1,4 @@
-import envMode from "@/components/helper/checkENVmode";
+import envMode from "@/helper/checkENVmode";
 import { Link, useNavigate } from "react-router-dom";
 
 function Header() {

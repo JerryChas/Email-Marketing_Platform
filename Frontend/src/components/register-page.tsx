@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-import envMode from "./helper/checkENVmode";
+import envMode from "../helper/checkENVmode";
 
 export function RegisterPage() {
   const [name, setName] = useState("");
@@ -105,7 +105,6 @@ export function RegisterPage() {
           >
             Register with Google
           </button>
-
         </form>
         <p className="mt-8 text-center text-sm text-gray-600">
           Already have an account?{" "}

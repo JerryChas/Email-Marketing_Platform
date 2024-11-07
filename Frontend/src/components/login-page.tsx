@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import envMode from "./helper/checkENVmode";
+import envMode from "../helper/checkENVmode";
 
 export function LoginPage() {
   const handleGoogleLogin = (e: React.FormEvent) => {
@@ -83,7 +83,10 @@ export function LoginPage() {
               Forgot Password?
             </Link> */}
           </div>
-          <Button className="w-full py-2 mt-4 text-white bg-green-600 rounded-md" disabled>
+          <Button
+            className="w-full py-2 mt-4 text-white bg-green-600 rounded-md"
+            disabled
+          >
             Login
           </Button>
 
@@ -97,7 +100,10 @@ export function LoginPage() {
       </Card>
       <p className="mt-4 text-sm text-green-700">
         Don't have an account?{" "}
-        <Link to="/" className="font-medium text-green-600 hover:text-green-500">
+        <Link
+          to="/"
+          className="font-medium text-green-600 hover:text-green-500"
+        >
           Register
         </Link>
       </p>

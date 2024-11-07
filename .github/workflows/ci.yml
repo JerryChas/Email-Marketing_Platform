@@ -1,55 +1,79 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
   push:
     branches: ["*"]
-    paths:
-      - "Backend/**"
   pull_request:
     branches: ["*"]
-    paths:
-      - "Backend/**"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        os: [ubuntu-latest, macos-latest]
+        node-version: [18.x, 20.x]
+
+    runs-on: ${{ matrix.os }}
+
+    environment: production
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-          cache-dependency-path: Backend/package-lock.json
+
+        # Caching node_modules
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       # Installera dependencies
       - name: Install dependencies
-        working-directory: ./Backend
-        run:
-          npm ci
+        run: npm ci
 
-          # 2. Formattera, linta och bygga
+      # 2. Formattera, linta och bygga
       - name: Run Prettier
         run: npm run format --if-present
-        working-directory: ./Backend
-
-      - run: npm run build --if-present
-        working-directory: ./Backend
-
-      - run: npm test
-        working-directory: ./Backend
 
       - name: Run ESLint
-        working-directory: ./Backend
-        run: |
-          npm run lint
-          npm run lint:fix
+        run: npm run lint:fix
+
+      # 3. Genererar Prisma Client
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Build project
+        run: npm run build
+
+      # 4. Databas migrering
+      - name: Run database migrations
+        run: npx prisma migrate deploy
+
+      # 5. Kör tester
+      - name: Run tests
+        run: npm test -- --detectOpenHandles
+
+      # 6. Skapa artifact för build-output
+      - name: Archive build output
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output-${{ matrix.os }}-node-${{ matrix.node-version }}
+          path: |
+            dist
+            build
+          retention-days: 5
