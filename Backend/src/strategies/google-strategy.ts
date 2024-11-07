@@ -11,7 +11,7 @@ if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
 
 const url =
   process.env.NODE_ENV === "production"
-    ? "https://email-marketing-platform-backend.vercel.app"
+    ? "https://email-marketing-platform-server.vercel.app"
     : "http://localhost:3000";
 
 passport.use(
